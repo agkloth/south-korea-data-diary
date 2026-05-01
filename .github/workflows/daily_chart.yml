@@ -1,0 +1,30 @@
+name: Daily South Korea Chart
+
+on:
+  schedule:
+    - cron: "0 23 * * *"
+  workflow_dispatch:
+
+jobs:
+  generate-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install pandas matplotlib seaborn requests openpyxl
+      - name: Generate daily chart
+        env:
+          AIRKOREA_KEY: ${{ secrets.AIRKOREA_KEY }}
+        run: python scripts/generate_daily.py
+      - name: Commit outputs
+        run: |
+          git config user.name "Pyeongtaek Bot"
+          git config user.email "actions@github.com"
+          git add outputs/ captions/ data/
+          git diff --staged --quiet || git commit -m "auto: day $(date +'%Y-%m-%d') chart + caption"
+          git push
