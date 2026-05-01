@@ -1,0 +1,8 @@
+Day 90: Pyeongtaek air quality update.
+
+Today's PM2.5: N/A µg/m³
+
+Tracking this every day this summer. Port activity, Yellow Dust season, and weather all show up in this line.
+
+Data: AirKorea API (airkorea.or.kr) — free and open.
+#AirQuality #Pyeongtaek #OpenData #DataAnalytics #Korea
