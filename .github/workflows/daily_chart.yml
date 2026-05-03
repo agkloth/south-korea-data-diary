@@ -26,14 +26,18 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
       - name: Set up Python
         uses: actions/setup-python@v5
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
         with:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install pandas matplotlib seaborn requests openpyxl numpy
+        run: pip install pandas plotly requests openpyxl numpy
 
       - name: Generate chart
         env:
