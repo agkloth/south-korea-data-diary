@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>South Korea Data Diary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:     #0D0D0D;
+      --paper:   #F5F0E8;
+      --cream:   #EDE8DC;
+      --red:     #C1321A;
+      --blue:    #185FA5;
+      --muted:   #6B6560;
+      --rule:    #C8C0B0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Source Serif 4', Georgia, serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── MASTHEAD ── */
+    .masthead {
+      border-bottom: 3px double var(--ink);
+      padding: 2rem 0 1.2rem;
+      text-align: center;
+      background: var(--paper);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .masthead-overline {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .masthead-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 6vw, 4.2rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--ink);
+    }
+    .masthead-title span {
+      color: var(--red);
+    }
+    .masthead-rule {
+      height: 1px;
+      background: var(--ink);
+      margin: 1rem auto 0.6rem;
+      max-width: 600px;
+    }
+    .masthead-tagline {
+      font-family: 'Source Serif 4', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    /* ── HERO BAND ── */
+    .hero {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 3.5rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    @media (max-width: 700px) {
+      .hero { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
+    .hero-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--paper);
+    }
+    .hero-headline em {
+      color: #E8A87C;
+      font-style: normal;
+    }
+    .hero-body {
+      font-family: 'Source Serif 4', serif;
+      font-size: 1rem;
+      color: #C8C0B0;
+      line-height: 1.75;
+    }
+    .hero-body p + p { margin-top: 1rem; }
+
+    /* ── STAT STRIP ── */
+    .stat-strip {
+      background: var(--red);
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .stat-item {
+      padding: 1rem 2.5rem;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.2);
+      flex-shrink: 0;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: white;
+      display: block;
+    }
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 2.5rem 0 1rem;
+      border-bottom: 2px solid var(--ink);
+      margin-bottom: 2rem;
+    }
+    .section-kicker {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      white-space: nowrap;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    /* ── CHART GRID ── */
+    .chart-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      margin-bottom: 3rem;
+    }
+    .chart-card {
+      background: var(--paper);
+      padding: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+    .chart-card:hover {
+      background: var(--cream);
+    }
+    .chart-card:hover .card-arrow { transform: translateX(4px); }
+    .card-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--ink);
+    }
+    .card-desc {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.5;
+      flex: 1;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 0.8rem;
+      border-top: 1px solid var(--rule);
+      margin-top: auto;
+    }
+    .card-source {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .card-arrow {
+      font-size: 0.85rem;
+      color: var(--blue);
+      font-family: 'DM Mono', monospace;
+      transition: transform 0.15s;
+    }
+    .card-live-dot {
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+      margin-right: 5px;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0;
+      border: 1px solid var(--rule);
+      margin-bottom: 3rem;
+    }
+    .how-step {
+      padding: 1.5rem;
+      border-right: 1px solid var(--rule);
+    }
+    .how-step:last-child { border-right: none; }
+    .how-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--rule);
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .how-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+    .how-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── STACK TABLE ── */
+    .stack-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 3rem;
+      font-size: 0.9rem;
+    }
+    .stack-table th {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: left;
+      padding: 0.5rem 1rem 0.5rem 0;
+      border-bottom: 2px solid var(--ink);
+    }
+    .stack-table td {
+      padding: 0.7rem 1rem 0.7rem 0;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: top;
+    }
+    .stack-table td:first-child {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--blue);
+      white-space: nowrap;
+    }
+    .stack-table td:last-child {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    footer a {
+      color: #E8A87C;
+      text-decoration: none;
+    }
+    footer a:hover { text-decoration: underline; }
+    .footer-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .footer-sub {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: #6B6560;
+      text-transform: uppercase;
+    }
+
+    /* ── DIVIDER ── */
+    .rule-ornament {
+      text-align: center;
+      color: var(--rule);
+      font-size: 1rem;
+      letter-spacing: 0.5em;
+      margin: 0.5rem 0 2rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<header>
+  <div class="masthead">
+    <div class="masthead-overline">Pyeongtaek, South Korea · Summer 2026</div>
+    <div class="masthead-title">South Korea <span>Data</span> Diary</div>
+    <div class="masthead-rule"></div>
+    <div class="masthead-tagline">One city. Open data. Interactive charts built live.</div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div style="background:var(--ink)">
+  <div class="hero">
+    <div>
+      <div class="hero-headline">
+        A city most data analysts<br>
+        have <em>never touched.</em>
+      </div>
+    </div>
+    <div class="hero-body">
+      <p>Pyeongtaek is home to the world's largest US military base outside America, Korea's #1 car export port, and the world's biggest Samsung semiconductor plant.</p>
+      <p>This project uses open Korean government data to analyze a fast-growing city that almost no one is studying. Every chart is interactive, reproducible, and built with free open-source tools.</p>
+    </div>
+  </div>
+</div>
+
+<!-- STAT STRIP -->
+<div class="stat-strip">
+  <div class="stat-item">
+    <span class="stat-num">683k</span>
+    <span class="stat-label">Population</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">#1</span>
+    <span class="stat-label">Car export port</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">42,000</span>
+    <span class="stat-label">US personnel</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">150k</span>
+    <span class="stat-label">Samsung employees</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">7</span>
+    <span class="stat-label">Charts published</span>
+  </div>
+</div>
+
+<!-- CHARTS -->
+<div class="section-wrap">
+  <div class="section-header">
+    <span class="section-kicker">Interactive charts</span>
+    <span class="section-title">Click any chart to open it live</span>
+  </div>
+
+  <div class="chart-grid">
+
+    <a class="chart-card" href="outputs/2026-05-03_city-portrait.html" target="_blank">
+      <span class="card-tag">Overview</span>
+      <div class="card-title">City Portrait</div>
+      <div class="card-desc">Key statistics at a glance — population, area, foreign residents, and local enterprises. The 30-second introduction to Pyeongtaek.</div>
+      <div class="card-footer">
+        <span class="card-source">KOSIS · City Portal</span>
+        <span class="card-arrow">Open →</span>
+      </div>
+    </a>
+
+    <a class="chart-card" href="outputs/2026-05-03_gyeonggi-cities.html" target="_blank">
+      <span class="card-tag">Demographics</span>
+      <div class="card-title">Gyeonggi Province Cities</div>
+      <div class="card-desc">How does Pyeongtaek rank among the 31 cities of Gyeonggi Province? 9th by population — but growing faster than every city above it.</div>
+      <div class="card-footer">
+        <span class="card-source">KOSIS 2023</span>
+        <span class="card-arrow">Open →</span>
+      </div>
+    </a>
+
+    <a class="chart-card" href="outputs/2026-05-03_three-engines.html" target="_blank">
+      <span class="card-tag">Economics</span>
+      <div class="card-title">The Three Engines</div>
+      <div class="card-desc">Pyeongtaek's economy runs on three distinct mega-projects — a port, a military base, and a semiconductor plant — that barely interact with each other.</div>
+      <div class="card-footer">
+        <span class="card-source">GPPC · US Army · InvestKorea</span>
+        <span class="card-arrow">Open →</span>
+      </div>
+    </a>
+
+    <a class="chart-card" href="outputs/2026-05-03_camp-humphreys.html" target="_blank">
+      <span class="card-tag">Military</span>
+      <div class="card-title">Camp Humphreys</div>
+      <div class="card-desc">The largest US military installation outside America. Bigger than Vatican City by 33x. What does 42,000 Americans living in a Korean suburb actually mean for a city?</div>
+      <div class="card-footer">
+        <span class="card-source">US Army Public Releases</span>
+        <span class="card-arrow">Open →</span>
+      </div>
+    </a>
+
+    <a class="chart-card" href="outputs/2026-05-03_population-growth.html" target="_blank">
+      <span class="card-tag">Demographics</span>
+      <div class="card-title">Population Growth</div>
+      <div class="card-desc">342,000 in 2000. 640,000 today. Nearly doubled in 24 years — the fastest-growing city in Gyeonggi Province, with annotated milestones showing what drove each surge.</div>
+      <div class="card-footer">
+        <span class="card-source">KOSIS · worldpopulationreview.com</span>
+        <span class="card-arrow">Open →</span>
+      </div>
+    </a>
+
+    <a class="chart-card" href="outputs/2026-05-03_port-cargo.html" target="_blank">
+      <span class="card-tag">Trade</span>
+      <div class="card-title">Port Cargo Volume</div>
+      <div class="card-desc">Monthly cargo data for Pyeongtaek Port — Korea's #1 automobile export hub. Includes Lunar New Year dip, pre year-end surge, and annual average baseline.</div>
+      <div class="card-footer">
+        <span class="card-source">GPPC Monthly Stats 2023</span>
+        <span class="card-arrow">Open →</span>
+      </div>
+    </a>
+
+    <a class="chart-card" href="outputs/2026-05-03_air-quality.html" target="_blank">
+      <span class="card-tag" style="display:flex;align-items:center;"><span class="card-live-dot"></span>Live · Air Quality</span>
+      <div class="card-title">PM2.5 Tracker</div>
+      <div class="card-desc">Daily PM2.5 readings pulled from the AirKorea API — updated automatically. Port ship emissions, Yellow Dust season, and weather all show up in this line.</div>
+      <div class="card-footer">
+        <span class="card-source">AirKorea API · airkorea.or.kr</span>
+        <span class="card-arrow">Open →</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="section-header">
+    <span class="section-kicker">Methodology</span>
+    <span class="section-title">How this project works</span>
+  </div>
+
+  <div class="how-grid">
+    <div class="how-step">
+      <span class="how-num">01</span>
+      <div class="how-title">Data sources</div>
+      <div class="how-desc">Korean government open data portals — KOSIS, AirKorea API, GPPC port authority, Pyeongtaek city portal. All free.</div>
+    </div>
+    <div class="how-step">
+      <span class="how-num">02</span>
+      <div class="how-title">Python + Plotly</div>
+      <div class="how-desc">Charts built in Python using Plotly — the same library used by professional data teams. Fully interactive HTML output.</div>
+    </div>
+    <div class="how-step">
+      <span class="how-num">03</span>
+      <div class="how-title">GitHub Actions</div>
+      <div class="how-desc">Automated workflow generates charts on demand. One dropdown pick — chart appears in 60 seconds, committed to the repo.</div>
+    </div>
+    <div class="how-step">
+      <span class="how-num">04</span>
+      <div class="how-title">GitHub Pages</div>
+      <div class="how-desc">Every generated chart is automatically published as a live URL. No server, no hosting costs, no maintenance.</div>
+    </div>
+    <div class="how-step" style="border-right:none">
+      <span class="how-num">05</span>
+      <div class="how-title">LinkedIn</div>
+      <div class="how-desc">Each chart comes with an auto-generated caption draft. Screenshot + caption + live link = one post.</div>
+    </div>
+  </div>
+
+  <!-- STACK -->
+  <div class="section-header">
+    <span class="section-kicker">Technical stack</span>
+    <span class="section-title">Tools and data sources</span>
+  </div>
+
+  <table class="stack-table">
+    <thead>
+      <tr>
+        <th>Tool</th>
+        <th>Purpose</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Python 3.11</td><td>Chart generation, data processing</td><td>Free</td></tr>
+      <tr><td>Plotly</td><td>Interactive HTML charts</td><td>Free</td></tr>
+      <tr><td>pandas</td><td>Data wrangling</td><td>Free</td></tr>
+      <tr><td>GitHub Actions</td><td>Automated chart generation</td><td>Free (2,000 min/mo)</td></tr>
+      <tr><td>GitHub Pages</td><td>Live chart hosting</td><td>Free</td></tr>
+      <tr><td>AirKorea API</td><td>Live PM2.5 readings for Pyeongtaek</td><td>Free (data.go.kr)</td></tr>
+      <tr><td>KOSIS</td><td>Korean national statistics</td><td>Free (kosis.kr/eng)</td></tr>
+      <tr><td>GPPC</td><td>Pyeongtaek Port monthly cargo data</td><td>Free (gppc.or.kr)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="rule-ornament">· · ·</div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-title">South Korea Data Diary</div>
+  <div class="footer-sub" style="margin:0.5rem 0 1rem;">
+    Built in Pyeongtaek, South Korea · Summer 2026
+  </div>
+  <div style="font-size:0.85rem; color:#6B6560;">
+    <a href="https://github.com/agkloth/south-korea-data-diary">GitHub →</a>
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    All data: Korean government open data
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    All code: open source
+  </div>
+</footer>
+
+</body>
+</html>
