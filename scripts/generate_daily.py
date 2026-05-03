@@ -164,36 +164,41 @@ github.com/agkloth/south-korea-data-diary
 """)
 
 def chart_three_engines():
+    import matplotlib.lines as mlines
     name = "three-engines"
     engines = [
-        {"title": "Pyeongtaek Port",  "color": "#2E86AB",
-         "stats": [("#1 in Korea", "car exports"), ("#4 in Korea", "container volume"),
-                   ("#5 in Korea", "total cargo"), ("79 berths", "when complete")]},
-        {"title": "Camp Humphreys",   "color": "#C73E1D",
+        {"title": "Pyeongtaek Port", "color": "#185FA5", "bg": "#E6F1FB",
+         "stats": [("#1 in Korea", "automobile exports"), ("#4 in Korea", "container volume"),
+                   ("#5 in Korea", "total cargo"), ("79 berths", "when expansion complete")]},
+        {"title": "Camp Humphreys",  "color": "#993C1D", "bg": "#FAECE7",
          "stats": [("Largest", "US base outside America"), ("42,000+", "personnel & families"),
-                   ("5 trillion ₩", "annual economic impact"), ("1982", "first Songtan burger")]},
-        {"title": "Samsung Godeok",   "color": "#3BB273",
-         "stats": [("World's largest", "semiconductor plant"), ("3.95M m²", "complex footprint"),
-                   ("150,000", "estimated employees"), ("₩41 trillion", "economic effect")]},
+                   ("5 tril. KRW", "annual economic impact"), ("1982", "first Songtan burger sold")]},
+        {"title": "Samsung Godeok",  "color": "#3B6D11", "bg": "#EAF3DE",
+         "stats": [("World's largest", "semiconductor plant"), ("3.95M m2", "complex footprint"),
+                   ("150,000", "estimated employees"), ("41 tril. KRW", "economic effect")]},
     ]
-    fig, axes = plt.subplots(1, 3, figsize=(13, 5))
+    fig, axes = plt.subplots(1, 3, figsize=(14, 6))
     fig.patch.set_facecolor("#FAFAFA")
     fig.suptitle("The three engines driving Pyeongtaek's growth",
-                 fontsize=14, fontweight="bold", y=1.02)
+                 fontsize=15, fontweight="bold", y=0.98)
     for ax, eng in zip(axes, engines):
-        c = eng["color"]
-        ax.set_facecolor(c + "12")
+        c, bg = eng["color"], eng["bg"]
+        ax.set_facecolor(bg)
         for spine in ax.spines.values():
             spine.set_edgecolor(c); spine.set_linewidth(2)
         ax.set_xticks([]); ax.set_yticks([])
-        ax.text(0.5, 0.92, eng["title"], ha="center", fontsize=13,
+        ax.text(0.5, 0.91, eng["title"], ha="center", fontsize=13,
                 fontweight="bold", color=c, transform=ax.transAxes)
-        for (stat, label), y in zip(eng["stats"], [0.72, 0.52, 0.32, 0.12]):
-            ax.text(0.5, y + 0.08, stat,  ha="center", fontsize=12,
-                    fontweight="bold", color="#222", transform=ax.transAxes)
-            ax.text(0.5, y - 0.04, label, ha="center", fontsize=8.5,
-                    color="#666", transform=ax.transAxes)
-    plt.tight_layout()
+        line = mlines.Line2D([0.08, 0.92], [0.84, 0.84], color=c,
+                             linewidth=0.8, transform=ax.transAxes)
+        ax.add_line(line)
+        for (stat, label), y in zip(eng["stats"], [0.70, 0.50, 0.30, 0.10]):
+            ax.text(0.5, y + 0.07, stat, ha="center", va="center",
+                    fontsize=12, fontweight="bold", color="#1a1a1a",
+                    transform=ax.transAxes)
+            ax.text(0.5, y - 0.05, label, ha="center", va="center",
+                    fontsize=9, color="#555555", transform=ax.transAxes)
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
     save_fig(name, fig)
     save_caption(name, """
 Pyeongtaek runs on three engines — and they barely interact with each other.
@@ -211,35 +216,48 @@ github.com/agkloth/south-korea-data-diary
 
 def chart_camp_humphreys():
     name = "camp-humphreys"
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+    fig = plt.figure(figsize=(13, 5.5))
     fig.patch.set_facecolor("#FAFAFA")
-    fig.suptitle("Camp Humphreys — by the numbers", fontsize=14, fontweight="bold")
+    fig.suptitle("Camp Humphreys — by the numbers",
+                 fontsize=15, fontweight="bold", y=0.97)
+    ax1 = fig.add_axes([0.03, 0.08, 0.42, 0.82])
     ax1.set_xlim(0, 10); ax1.set_ylim(0, 10); ax1.axis("off")
-    ax1.set_title("Size comparison (approximate scale)", fontsize=10, color="#555")
-    for (label, area), color, x in zip(
-        [("Camp\nHumphreys\n14.7 km²", 14.7),
-         ("Central Park\nNYC\n3.4 km²", 3.4),
-         ("Vatican\nCity\n0.44 km²", 0.44)],
-        ["#C73E1D", "#BBCBDD", "#DDDDDD"], [1, 5, 8.2]
-    ):
-        s = np.sqrt(area) * 0.9
-        ax1.add_patch(plt.Rectangle((x, 5 - s/2), s, s, color=color, alpha=0.8))
-        ax1.text(x + s/2, 5 - s/2 - 0.4, label, ha="center",
-                 fontsize=8, color="#333", linespacing=1.3)
-    ax2.set_facecolor("#FAFAFA")
-    categories = ["Annual economic\nimpact", "Personnel &\nfamilies", "Land area"]
-    norm_vals = [100, 42/5000*100, 14.7/5000*100]
-    display = ["₩5 trillion / year", "42,000 people", "14.7 km²"]
-    bars = ax2.barh(categories, norm_vals, color=["#C73E1D","#E07B54","#F0B59A"], height=0.5)
-    for bar, lbl in zip(bars, display):
-        ax2.text(bar.get_width() + 1, bar.get_y() + bar.get_height()/2,
-                 lbl, va="center", fontsize=9, color="#333")
-    ax2.set_xlim(0, 130)
-    ax2.set_title("Key metrics", fontsize=10, color="#555")
-    for s in ["top","right","bottom"]:
-        ax2.spines[s].set_visible(False)
-    ax2.set_xticks([])
-    plt.tight_layout()
+    ax1.text(5, 9.5, "Size comparison (approximate scale)",
+             ha="center", fontsize=10, color="#888888")
+    items = [
+        ("Camp\nHumphreys\n14.7 km2", 14.7, "#D85A30", 0.9),
+        ("Central\nPark NYC\n3.4 km2",  3.4, "#888780", 0.75),
+        ("Vatican\nCity\n0.44 km2",    0.44, "#B4B2A9", 0.6),
+    ]
+    x_starts = [0.5, 5.2, 7.9]
+    for (label, area, color, alpha), x in zip(items, x_starts):
+        s = np.sqrt(area) * 0.95
+        ax1.add_patch(plt.Rectangle((x, 4.5 - s/2), s, s,
+                                    color=color, alpha=alpha, zorder=2))
+        ax1.text(x + s/2, 4.5 - s/2 - 0.45, label, ha="center",
+                 fontsize=8.5, color="#333333", linespacing=1.35)
+    card_data = [
+        ("42,000+",      "personnel and families on base",
+         "Largest US community outside American soil", "#D85A30", "#FAECE7"),
+        ("5 tril. KRW",  "annual economic impact",
+         "Approx. $3.7 billion USD per year",          "#185FA5", "#E6F1FB"),
+        ("33x larger",   "than Vatican City by area",
+         "4x larger than Central Park, New York",       "#3B6D11", "#EAF3DE"),
+    ]
+    for i, (val, label, sub, color, bg) in enumerate(card_data):
+        y_top = 0.92 - i * 0.32
+        ax_c = fig.add_axes([0.50, y_top - 0.24, 0.47, 0.26])
+        ax_c.set_facecolor(bg)
+        for spine in ax_c.spines.values():
+            spine.set_edgecolor(color + "66"); spine.set_linewidth(1)
+        ax_c.set_xticks([]); ax_c.set_yticks([])
+        ax_c.text(0.06, 0.72, val, ha="left", va="center",
+                  fontsize=18, fontweight="bold", color=color,
+                  transform=ax_c.transAxes)
+        ax_c.text(0.06, 0.42, label, ha="left", va="center",
+                  fontsize=10, color="#333333", transform=ax_c.transAxes)
+        ax_c.text(0.06, 0.16, sub, ha="left", va="center",
+                  fontsize=8.5, color="#777777", transform=ax_c.transAxes)
     save_fig(name, fig)
     save_caption(name, """
 Camp Humphreys is the largest US military base outside of America.
@@ -339,17 +357,30 @@ def chart_port_cargo():
               "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     cargo = [4821, 4102, 5234, 5012, 5401, 5198,
              5367, 5289, 5412, 5601, 5234, 4987]
-    fig, ax = plt.subplots(figsize=(11, 5))
+    peak_idx = cargo.index(max(cargo))
+    colors = ["#D85A30" if i == peak_idx else "#378ADD"
+              for i in range(len(cargo))]
+    fig, ax = plt.subplots(figsize=(12, 5.5))
     fig.patch.set_facecolor("#FAFAFA")
-    bars = ax.bar(months, cargo, color="#2E86AB", width=0.6, alpha=0.85)
-    for bar, val in zip(bars, cargo):
-        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 50,
-                f"{val:,}", ha="center", fontsize=8, color="#444")
-    ax.set_ylabel("Cargo volume (thousand tonnes)", fontsize=10)
-    ax.set_title("Pyeongtaek Port — monthly cargo volume 2023\n#1 in Korea for automobile exports",
+    bars = ax.bar(months, cargo, color=colors, width=0.65, alpha=0.88)
+    for bar, val, color in zip(bars, cargo, colors):
+        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 30,
+                f"{val:,}", ha="center", fontsize=8.5,
+                color="#993C1D" if color == "#D85A30" else "#0C447C")
+    ax.set_ylim(3500, 6000)
+    ax.set_ylabel("Cargo volume (thousand tonnes)", fontsize=10, color="#555")
+    ax.set_title("Pyeongtaek Port — monthly cargo volume 2023\n"
+                 "#1 in Korea for automobile exports",
                  fontsize=13, fontweight="bold")
     ax.spines["top"].set_visible(False); ax.spines["right"].set_visible(False)
-    ax.set_ylim(0, 6500)
+    ax.tick_params(axis="both", labelsize=9)
+    ax.annotate("Peak: Oct", xy=(peak_idx, cargo[peak_idx]),
+                xytext=(peak_idx - 1.8, 5750), fontsize=9, color="#993C1D",
+                arrowprops=dict(arrowstyle="->", color="#993C1D", lw=1))
+    ax.legend(handles=[
+        mpatches.Patch(color="#D85A30", label="Peak month (Oct)"),
+        mpatches.Patch(color="#378ADD", label="Other months"),
+    ], loc="lower right", fontsize=9, framealpha=0.6)
     plt.tight_layout()
     save_fig(name, fig)
     save_caption(name, """
