@@ -2,12 +2,12 @@ Introducing my South Korea Data Diary 🇰🇷
 
 I'm spending the summer in Pyeongtaek — a city most people have never heard of.
 
-Every post: one chart, real data, open source code.
+Every post: one interactive chart, real open-source data.
 
-683,000 people. The world's largest US military base. Korea's #1 car export port. The world's biggest Samsung semiconductor plant.
+683,000 people. World's largest US military base. Korea's #1 car export port. World's biggest Samsung semiconductor plant.
 
 It's also where I'm eating breakfast right now.
 
-All code: github.com/agkloth/south-korea-data-diary
+github.com/agkloth/south-korea-data-diary
 Data: KOSIS / Pyeongtaek City Portal
 #DataAnalytics #Korea #OpenData #100DaysOfData
