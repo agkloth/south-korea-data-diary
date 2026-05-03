@@ -17,7 +17,7 @@ import matplotlib.patches as mpatches
 from pathlib import Path
 
 # ── Config ────────────────────────────────────────────────────────────────────
-START_DATE = datetime.date(2025, 6, 2)          # change to your first day in Pyeongtaek
+START_DATE = datetime.date(2025, 6, 2)     
 AIRKOREA_API_KEY = os.environ.get("AIRKOREA_KEY", "")   # set in GitHub secrets
 OUTPUT_DIR = Path("outputs")
 CAPTION_DIR = Path("captions")
