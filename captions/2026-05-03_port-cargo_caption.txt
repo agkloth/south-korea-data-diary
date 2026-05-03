@@ -1,8 +1,10 @@
 Pyeongtaek Port moves more cars than any other port in Korea.
 
-Monthly cargo volume for 2023 — over 62 million tonnes for the year.
+Monthly cargo volume 2023 — over 62 million tonnes for the year.
 
-The Feb dip is typical (Lunar New Year slowdown). The Oct peak lines up with Hyundai/Kia's export surge before year-end.
+Feb dip: Lunar New Year slowdown. Oct peak: Hyundai/Kia pre year-end export surge.
+
+Hover over any bar for exact figures.
 
 Data: Gyeonggi Pyeongtaek Port Authority (gppc.or.kr)
 github.com/agkloth/south-korea-data-diary
