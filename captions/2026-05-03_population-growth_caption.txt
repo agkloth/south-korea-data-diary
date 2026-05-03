@@ -2,9 +2,9 @@ Pyeongtaek's population nearly doubled in 24 years.
 
 342,000 in 2000. 640,000+ today.
 
-That's not natural growth — that's three mega-projects arriving at once: Samsung Godeok, Camp Humphreys expansion, and Pyeongtaek Port.
+That's not natural growth — that's three mega-projects arriving at once.
 
-No other city in Gyeonggi Province grew this fast over the same period.
+Hover over the chart to explore every data point.
 
 Data: KOSIS / worldpopulationreview.com
 github.com/agkloth/south-korea-data-diary
