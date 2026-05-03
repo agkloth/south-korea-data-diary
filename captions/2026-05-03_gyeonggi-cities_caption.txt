@@ -1,0 +1,11 @@
+Where does Pyeongtaek rank among Gyeonggi cities?
+
+9th out of 31 — with ~608,000 people.
+
+But here's what the bar chart doesn't show: Pyeongtaek is growing faster than every city above it.
+
+Three things driving it: Samsung's chip megaplant, Camp Humphreys expansion, and Pyeongtaek Port.
+
+Data: KOSIS registered population statistics
+github.com/agkloth/south-korea-data-diary
+#DataViz #Korea #Python #Demographics
