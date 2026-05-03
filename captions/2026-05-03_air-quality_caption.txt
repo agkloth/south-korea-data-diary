@@ -1,0 +1,9 @@
+Pyeongtaek air quality — 2026-05-03
+
+Today's PM2.5: N/A µg/m³
+
+Tracking this all summer. Port activity, Yellow Dust season, and wind direction all show up in this line.
+
+Data: AirKorea API (airkorea.or.kr) — free and open source
+github.com/agkloth/south-korea-data-diary
+#AirQuality #Pyeongtaek #OpenData #DataAnalytics #Korea
