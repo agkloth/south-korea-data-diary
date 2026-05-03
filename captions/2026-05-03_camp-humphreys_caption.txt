@@ -1,0 +1,11 @@
+Camp Humphreys is the largest US military base outside of America.
+
+Bigger than Vatican City by 33x. Bigger than Central Park by 4x.
+
+42,000 Americans live inside those gates. Economic impact: ₩5 trillion (~$3.7B USD) per year.
+
+Almost no one has run a data analysis on what that does to a city. That's what I'm here to find out.
+
+Sources: US Army public releases, KOSIS
+github.com/agkloth/south-korea-data-diary
+#CampHumphreys #Pyeongtaek #DataAnalysis #Korea
