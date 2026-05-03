@@ -1,0 +1,11 @@
+Pyeongtaek runs on three engines — and they barely interact with each other.
+
+The port ships Korean cars to the world.
+The base brings 42,000 Americans to a Korean suburb.
+The chip plant quietly employs ~150,000 people.
+
+Most cities have one main industry. This city has three.
+
+Sources: GPPC, US Army, InvestKorea
+github.com/agkloth/south-korea-data-diary
+#Pyeongtaek #DataAnalytics #Korea #Economics
