@@ -1,147 +1,90 @@
-# Pyeongtaek Data Project — Summer 2025
+# South Korea Data Diary
 
-> 90 days. One city. One chart per day. All open source.
+**Live portfolio:** [agkloth.github.io/south-korea-data-diary](https://agkloth.github.io/south-korea-data-diary)
 
-A daily data series about Pyeongtaek, South Korea — home to the world's largest US military base, Korea's #1 car export port, and the world's biggest Samsung semiconductor plant.
+A data journalism project documenting Pyeongtaek, South Korea through original analysis and interactive visualizations — built live during the summer of 2026.
 
-Every morning at 8am KST, a GitHub Action automatically:
-1. Runs the Python chart generator
-2. Saves the chart to `outputs/`
-3. Writes a LinkedIn caption draft to `captions/`
-4. Commits everything to this repo
-
-I wake up, copy the caption, post the image. Done in 5 minutes.
+Pyeongtaek is one of the fastest-growing cities in South Korea, home to the world's largest US military base (Camp Humphreys), Korea's #1 car export port, and the world's biggest Samsung semiconductor plant. Almost no public data analysis exists on this city. This project changes that.
 
 ---
 
-## Setup guide (copy-paste, beginner friendly)
+## Charts
 
-### Step 1 — Create your GitHub repo
-
-1. Go to [github.com](https://github.com) and sign in (create a free account if needed)
-2. Click the **+** in the top right → **New repository**
-3. Name it `pyeongtaek-data`
-4. Set it to **Public**
-5. Click **Create repository**
+| Chart | Description | Live |
+|-------|-------------|------|
+| City Portrait | Key stats: population, area, foreign residents, enterprises | [View →](https://agkloth.github.io/south-korea-data-diary/outputs/2026-05-03_city-portrait.html) |
+| Gyeonggi Cities | Population ranking across all Gyeonggi Province cities | [View →](https://agkloth.github.io/south-korea-data-diary/outputs/2026-05-03_gyeonggi-cities.html) |
+| Three Engines | Port, military base, and semiconductor plant by the numbers | [View →](https://agkloth.github.io/south-korea-data-diary/outputs/2026-05-03_three-engines.html) |
+| Camp Humphreys | Size comparison and economic footprint | [View →](https://agkloth.github.io/south-korea-data-diary/outputs/2026-05-03_camp-humphreys.html) |
+| Population Growth | Pyeongtaek's growth from 342k to 640k (2000–2024) | [View →](https://agkloth.github.io/south-korea-data-diary/outputs/2026-05-03_population-growth.html) |
+| Port Cargo | Monthly cargo volume, Pyeongtaek Port 2023 | [View →](https://agkloth.github.io/south-korea-data-diary/outputs/2026-05-03_port-cargo.html) |
+| Air Quality | Live PM2.5 tracker — updated daily | [View →](https://agkloth.github.io/south-korea-data-diary/outputs/2026-05-03_air-quality.html) |
 
 ---
 
-### Step 2 — Upload these files
+## How it works
 
-On your new repo page, click **uploading an existing file** and upload everything in this folder. Keep the folder structure exactly as-is.
+Every chart is generated automatically via **GitHub Actions** — no manual runs needed.
 
-Or if you have Git installed, run this in your terminal:
-
-```bash
-git clone https://github.com/YOUR_USERNAME/pyeongtaek-data.git
-# copy all these files into the cloned folder
-cd pyeongtaek-data
-git add .
-git commit -m "init: project setup"
-git push
+```
+GitHub Actions (daily trigger)
+    → scripts/generate_daily.py
+        → Pulls live data (AirKorea API, KOSIS, GPPC)
+        → Generates interactive Plotly HTML chart
+        → Writes LinkedIn caption draft
+    → Commits outputs/ and captions/ to repo
+    → GitHub Pages publishes live URLs automatically
 ```
 
----
-
-### Step 3 — Get your free AirKorea API key
-
-This gives you live daily PM2.5 readings for Pyeongtaek.
-
-1. Go to [data.go.kr](https://www.data.go.kr/en/index.do)
-2. Create a free account (click Sign Up)
-3. Search for **에어코리아** (AirKorea)
-4. Click **대기오염정보 조회 서비스** → click **활용신청** (Apply for use)
-5. Within 1–2 hours you'll receive an API key by email
+To generate a chart on demand: **Actions tab → Daily South Korea Chart → Run workflow → pick a chart**.
 
 ---
 
-### Step 4 — Add the API key to GitHub Secrets
+## Stack
 
-This keeps your key private — it never appears in your code.
+| Tool | Purpose |
+|------|---------|
+| Python 3.11 | Chart generation |
+| Plotly | Interactive HTML charts |
+| pandas | Data processing |
+| GitHub Actions | Automated daily runs |
+| GitHub Pages | Live chart hosting |
+| AirKorea API | Live PM2.5 data |
+| KOSIS | Korean national statistics |
+| GPPC | Pyeongtaek Port cargo data |
 
-1. Go to your GitHub repo
-2. Click **Settings** → **Secrets and variables** → **Actions**
-3. Click **New repository secret**
-4. Name: `AIRKOREA_KEY`
-5. Value: paste your API key from Step 3
-6. Click **Add secret**
-
----
-
-### Step 5 — Set your start date
-
-Open `scripts/generate_daily.py` in GitHub (click the file, then the pencil icon to edit).
-
-Find this line near the top:
-
-```python
-START_DATE = datetime.date(2025, 6, 2)
-```
-
-Change `2025, 6, 2` to your actual first day in Pyeongtaek. Then click **Commit changes**.
-
----
-
-### Step 6 — Test it manually
-
-1. Go to your repo → **Actions** tab
-2. Click **Daily Pyeongtaek Chart** in the left sidebar
-3. Click **Run workflow** → **Run workflow** (green button)
-4. Wait ~60 seconds
-5. Go back to your repo — you should see new files in `outputs/` and `captions/`
-
-If it worked: you're done. It will now run automatically every morning at 8am KST.
-
----
-
-### Step 7 — Your daily routine (5 minutes)
-
-Every morning:
-1. Open your GitHub repo
-2. Open `captions/dayXX_caption.txt` → copy the text
-3. Open `outputs/dayXX_chart.png` → download it
-4. Post on LinkedIn: upload the image, paste the caption, edit the `[your link]` placeholder
-5. Done
-
----
-
-## Adding new chart functions (as the weeks progress)
-
-Open `scripts/generate_daily.py` and find the `CHART_FUNCTIONS` dictionary near the bottom:
-
-```python
-CHART_FUNCTIONS = {
-    1: chart_day01,
-    2: chart_day02,
-    ...
-}
-```
-
-To add Day 8, write a new function `chart_day08(day)` that follows the same pattern as the existing ones, then add `8: chart_day08` to the dictionary.
-
-Any day that doesn't have a specific function yet automatically falls back to the **air quality tracker** — so your repo always gets a daily commit even while you're building out future weeks.
+All tools are free and open source.
 
 ---
 
 ## Data sources
 
-| Portal | What it covers | URL |
+| Source | What it covers | URL |
 |--------|---------------|-----|
-| Pyeongtaek City Data | Population, housing, transport | pyeongtaek.go.kr/data |
+| Pyeongtaek City Portal | Population, housing, business, transport | pyeongtaek.go.kr/data |
+| KOSIS | Korean national statistics | kosis.kr/eng |
 | Korea Open Data Portal | 90+ Pyeongtaek datasets | data.go.kr |
-| Gyeonggi Port Authority | Monthly cargo stats | gppc.or.kr/en |
-| KOSIS | National statistics | kosis.kr/eng |
+| Gyeonggi Port Authority | Monthly cargo volume | gppc.or.kr/en |
 | AirKorea | Real-time PM2.5/PM10 | airkorea.or.kr |
 
 ---
 
-## Tools used
+## Project structure
 
-- Python 3.11
-- pandas, matplotlib, seaborn, requests
-- GitHub Actions (free tier — 2,000 minutes/month, this uses ~2 min/day)
-- All data: free Korean government open data
+```
+south-korea-data-diary/
+├── .github/
+│   └── workflows/
+│       └── daily_chart.yml     # GitHub Actions workflow
+├── scripts/
+│   └── generate_daily.py       # Chart generator (Plotly)
+├── outputs/                    # Generated HTML charts
+├── captions/                   # LinkedIn caption drafts
+├── data/                       # Cached data (air quality log)
+├── index.html                  # Portfolio landing page
+└── README.md
+```
 
 ---
 
-*Built during summer 2025 in Pyeongtaek, South Korea.*
+*Built in Pyeongtaek, South Korea · Summer 2026*
